@@ -1,0 +1,95 @@
+input CreateTodoInput {
+  notes: String
+  priority: Priority
+  title: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""Which way the server should break."""
+enum FailureKind {
+  """A query against a row that does not exist."""
+  DATABASE
+
+  """
+  A GraphQLError with code BAD_USER_INPUT. Deliberately NOT sent to Sentry.
+  """
+  EXPECTED
+
+  """An error thrown inside a nested span."""
+  NESTED
+
+  """A plain Error nobody caught. The common case."""
+  UNHANDLED
+}
+
+type Mutation {
+  """Deletes every completed todo and returns how many were removed."""
+  clearCompleted: Int!
+  createTodo(input: CreateTodoInput!): Todo!
+
+  """Deletes a todo and returns the id that was removed."""
+  deleteTodo(id: ID!): ID!
+
+  """Flips the completed flag."""
+  toggleTodo(id: ID!): Todo!
+  updateTodo(id: ID!, input: UpdateTodoInput!): Todo!
+}
+
+"""How urgent a todo is."""
+enum Priority {
+  HIGH
+  LOW
+  MEDIUM
+}
+
+type Query {
+  """Throws on the server in the way you choose."""
+  failServer(kind: FailureKind!): String!
+
+  """Does artificial work in three nested spans, to show a trace waterfall."""
+  slowOperation(milliseconds: Int = 600): String!
+
+  """A single todo by id, or null if it does not exist."""
+  todo(id: ID!): Todo
+  todoStats: TodoStats!
+
+  """All todos, newest first, optionally filtered."""
+  todos(search: String, status: TodoStatus = ALL): [Todo!]!
+}
+
+"""A single todo item."""
+type Todo {
+  completed: Boolean!
+  createdAt: DateTime!
+  id: ID!
+  notes: String
+  priority: Priority!
+  title: String!
+  updatedAt: DateTime!
+}
+
+"""Aggregate counts used by the list header."""
+type TodoStats {
+  active: Int!
+  completed: Int!
+  total: Int!
+}
+
+"""Filter for which todos to return."""
+enum TodoStatus {
+  ACTIVE
+  ALL
+  COMPLETED
+}
+
+"""Only the fields you provide are changed."""
+input UpdateTodoInput {
+  completed: Boolean
+  notes: String
+  priority: Priority
+  title: String
+}

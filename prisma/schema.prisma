@@ -1,0 +1,34 @@
+// Prisma schema — the single source of truth for the database shape.
+// Pothos reads the generated types from here, so a change to a model
+// propagates into the GraphQL schema as a TypeScript error until you handle it.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+generator pothos {
+  provider     = "prisma-pothos-types"
+  clientOutput = "./prisma"
+  output       = "../src/generated/pothos-types.ts"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// A single todo item.
+model Todo {
+  id        String   @id @default(cuid())
+  title     String
+  notes     String?
+  completed Boolean  @default(false)
+  /// SQLite has no native enum type, so priority is stored as text
+  /// ("LOW" | "MEDIUM" | "HIGH") and exposed as a real GraphQL enum.
+  priority  String   @default("MEDIUM")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([completed])
+  @@index([createdAt])
+}

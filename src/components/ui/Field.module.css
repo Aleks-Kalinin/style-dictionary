@@ -1,0 +1,81 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  font-size: var(--font-size-1);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.hint {
+  font-size: var(--font-size-0);
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: var(--font-size-0);
+  color: var(--color-danger-base);
+}
+
+/* --- Shared control surface ---------------------------------------------- */
+
+.control {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-primary);
+  border: var(--border-width-thin) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+
+  font-size: var(--font-size-2);
+  line-height: var(--line-height-snug);
+
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.control:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+
+.control:disabled {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.invalid {
+  border-color: var(--color-danger-base);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+
+  /* Chevron drawn with a gradient so the component ships no image asset. */
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
+    linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% + 2px),
+    calc(100% - 13px) calc(50% + 2px);
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+  padding-right: var(--space-7);
+}

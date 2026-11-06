@@ -1,0 +1,71 @@
+# Paste this whole file into GraphiQL at http://localhost:3000/api/graphql
+#
+# It holds several NAMED operations. GraphiQL shows a dropdown next to the
+# play button; pick the one to run. Each needs its own variables, listed
+# above it -- paste those into the "Variables" pane at the bottom left.
+#
+# Shortcuts: Ctrl+Enter runs, Ctrl+Space autocompletes, and the Docs tab on
+# the right is the schema, generated from your Pothos code.
+
+fragment TodoFields on Todo {
+  id
+  title
+  notes
+  completed
+  priority
+  createdAt
+}
+
+query GetTodos($status: TodoStatus = ALL, $search: String) {
+  todos(status: $status, search: $search) {
+    ...TodoFields
+  }
+  todoStats {
+    total
+    active
+    completed
+  }
+}
+
+query GetOneTodo($id: ID!) {
+  todo(id: $id) {
+    ...TodoFields
+    updatedAt
+  }
+}
+
+mutation CreateTodo($input: CreateTodoInput!) {
+  createTodo(input: $input) {
+    ...TodoFields
+  }
+}
+
+mutation UpdateTodo($id: ID!, $input: UpdateTodoInput!) {
+  updateTodo(id: $id, input: $input) {
+    ...TodoFields
+  }
+}
+
+mutation ToggleTodo($id: ID!) {
+  toggleTodo(id: $id) {
+    id
+    title
+    completed
+  }
+}
+
+mutation DeleteTodo($id: ID!) {
+  deleteTodo(id: $id)
+}
+
+mutation ClearCompleted {
+  clearCompleted
+}
+
+query SlowOperation($milliseconds: Int = 600) {
+  slowOperation(milliseconds: $milliseconds)
+}
+
+query FailServer($kind: FailureKind = UNHANDLED) {
+  failServer(kind: $kind)
+}

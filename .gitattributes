@@ -1,0 +1,12 @@
+# Normalise line endings. Without this, Windows checkouts rewrite every file
+# to CRLF and the first commit from a macOS or Linux machine shows the whole
+# repository as changed.
+* text=auto eol=lf
+
+# Binary files git must not touch.
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.woff binary
+*.woff2 binary
+*.db   binary

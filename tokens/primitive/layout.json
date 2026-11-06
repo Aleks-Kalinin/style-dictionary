@@ -1,0 +1,32 @@
+{
+  "layout": {
+    "max": {
+      "width": {
+        "$value": "44rem",
+        "$type": "dimension"
+      }
+    }
+  },
+  "z": {
+    "base": {
+      "$value": "0",
+      "$type": "number"
+    },
+    "raised": {
+      "$value": "10",
+      "$type": "number"
+    },
+    "sticky": {
+      "$value": "100",
+      "$type": "number"
+    },
+    "overlay": {
+      "$value": "1000",
+      "$type": "number"
+    },
+    "toast": {
+      "$value": "2000",
+      "$type": "number"
+    }
+  }
+}

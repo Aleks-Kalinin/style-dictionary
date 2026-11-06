@@ -1,0 +1,64 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* The native input stays in the DOM for keyboard and screen reader support,
+   but is made invisible so we can style a box that browsers let us control. */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.box {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+
+  border: var(--border-width-thick) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-raised);
+  cursor: pointer;
+
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.box:hover {
+  border-color: var(--color-accent-base);
+}
+
+.input:checked + .box {
+  background-color: var(--color-accent-solid);
+  border-color: var(--color-accent-solid);
+}
+
+.input:focus-visible + .box {
+  box-shadow: var(--focus-ring);
+}
+
+.input:disabled + .box {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.check {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-on-solid);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.input:checked + .box .check {
+  opacity: 1;
+  transform: scale(1);
+}
